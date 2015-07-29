@@ -1,0 +1,23 @@
+{
+    "name": "archipelia/image-cache",
+    "authors": [
+        {
+            "name": "Archipelia",
+            "email": "tech@archipelia.com"
+        }
+    ],
+    "require": {
+        "ext-gd": "*",
+        "imagine/imagine": "0.6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Atoll\\ImageCache\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
