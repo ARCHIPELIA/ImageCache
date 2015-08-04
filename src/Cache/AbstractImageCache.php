@@ -2,7 +2,7 @@
 
 namespace Atoll\ImageCache\Cache;
 
-class AbstractImageCache
+abstract class AbstractImageCache
 {
   /**
    * @var string

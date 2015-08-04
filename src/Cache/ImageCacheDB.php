@@ -15,7 +15,7 @@ use Imagine\Image\ImageInterface;
 class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
 {
   /**
-   * @var
+   * @var mixed
    */
   protected $BdD;
 
@@ -99,12 +99,12 @@ class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
     $globPath = $this->getPath($category, '*', $id);
 
     if (!($paths = @glob($globPath))) {
-      throw new RuntimeException(sprintf('Erreur pendant la suppression du cache (%s:%s) : Erreur sur le glob', $category->getName(), $id));
+      throw new RuntimeException(sprintf('Error while deleting cache (%s:%s) : glob() error', $category->getName(), $id));
     }
 
     foreach ($paths as $path) {
       if (!@unlink($path)) {
-        throw new RuntimeException(sprintf('Erreur pendant la suppression du cache (%s:%s) : Erreur sur unlink', $category->getName(), $id));
+        throw new RuntimeException(sprintf('Error while deleting cache (%s:%s) : unlink() error', $category->getName(), $id));
       }
     }
 
@@ -186,7 +186,7 @@ class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
     $resizePath = $this->getPath($category, $size, $id);
     if (!file_exists(dirname($resizePath))) {
       if (!@mkdir(dirname($resizePath), 0755, true)) {
-        throw new RuntimeException(sprintf("Impossible de créer l'arborescence du dossier '%s'", $resizePath));
+        throw new RuntimeException(sprintf("Unable to create the folder tree '%s'", $resizePath));
       }
     }
 
@@ -243,7 +243,7 @@ class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
     $originalPath = $this->getOriginalPath($category, $id);
     if (!file_exists(dirname($originalPath))) {
       if (!@mkdir(dirname($originalPath), 0755, true)) {
-        throw new \RuntimeException(sprintf("Impossible de créer l'arborescence du dossier '%s'", $originalPath));
+        throw new \RuntimeException(sprintf("Unable to create the folder tree '%s'", $originalPath));
       }
     }
 
@@ -251,12 +251,12 @@ class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
     $blob = $this->BdD->SqlFetchField($category->getContentQuery());
 
     if (!is_a($blob, 'OCI-Lob')) {
-      throw new RuntimeException("Champs image incorrect, OCI-Lob attendu !");
+      throw new RuntimeException("Invalid image field, OCI-Lob expected!");
     }
 
     if (!@file_put_contents($originalPath, $blob->load())) {
       unlink($originalPath);
-      throw new RuntimeException(sprintf("Erreur lors de l'écriture de l'image '%s'", $originalPath));
+      throw new RuntimeException(sprintf("Error while writing image '%s'", $originalPath));
     }
 
     return (new Imagine())

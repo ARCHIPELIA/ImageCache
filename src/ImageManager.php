@@ -152,7 +152,7 @@ class ImageManager
     }
 
     if (!array_key_exists($name, $this->sizes)) {
-      throw new \InvalidArgumentException(sprintf("Taille d'image <b>%s</b> non définie !", $name));
+      throw new \InvalidArgumentException(sprintf("Image size <b>%s</b> undefined!", $name));
     }
 
     return $this->sizes[$name];
@@ -190,7 +190,7 @@ class ImageManager
   public function getCategory($name)
   {
     if (!array_key_exists($name, $this->categories)) {
-      throw new \InvalidArgumentException("Catégorie d'image <b>%s</b> non définie !", $name);
+      throw new \InvalidArgumentException("Image category <b>%s</b> undefined!", $name);
     }
 
     return $this->categories[$name];

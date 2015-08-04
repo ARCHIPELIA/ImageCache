@@ -2,7 +2,7 @@
 
 namespace Atoll\ImageCache\Category;
 
-class AbstractImageCategory
+abstract class AbstractImageCategory
 {
   /**
    * @var string
