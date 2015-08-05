@@ -233,4 +233,13 @@ class ImageManager
 
     return $this->cache->deleteCache($category, $prop);
   }
+
+  /**
+   * @param string $mime
+   * @return boolean
+   */
+  public function isImageSupported($mime)
+  {
+    return in_array($mime, self::$MIME_SUPPORTED);
+  }
 }
