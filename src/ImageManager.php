@@ -8,7 +8,8 @@ use Atoll\ImageCache\Exception\InvalidArgumentException;
 
 class ImageManager
 {
-  const ORIGINAL_SIZE_NAME = 'ORIGINAL';
+  const ORIGINAL_SIZE_NAME  = 'ORIGINAL';
+  const MIME_SUPPORTED      =  ['image/gif', 'image/jpeg', 'image/png', 'image/bmp'];
 
   /**
    * @var ImageCacheInterface
@@ -240,6 +241,6 @@ class ImageManager
    */
   public function isImageSupported($mime)
   {
-    return in_array($mime, self::$MIME_SUPPORTED);
+    return in_array($mime, self::MIME_SUPPORTED);
   }
 }
