@@ -213,6 +213,20 @@ class ImageManager
 
   /**
    * @param string $categName
+   * @param string $sizeName
+   * @param mixed $prop
+   * @return string
+   */
+  public function getPath($categName, $sizeName, $prop)
+  {
+    $category = $this->getCategory($categName);
+    $size     = $this->getSize($sizeName);
+
+    return $this->cache->getPath($category, $size, $prop);
+  }
+  
+  /**
+   * @param string $categName
    * @param mixed $prop
    * @return boolean
    */
