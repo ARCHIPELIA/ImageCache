@@ -117,7 +117,7 @@ class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
    * @param int $id
    * @return string
    */
-  protected function getPath(ImageCategoryInterface $category, $size, $id)
+  public function getPath(ImageCategoryInterface $category, $size, $id)
   {
     $basePart = (strpos($this->basePath, '/') !== 0) ? dirname(__FILE__) . $this->basePath : $this->basePath;
 
