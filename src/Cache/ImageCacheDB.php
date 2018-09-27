@@ -98,13 +98,11 @@ class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
 
     $globPath = $this->getPath($category, '*', $id);
 
-    if (!($paths = @glob($globPath))) {
-      throw new RuntimeException(sprintf('Error while deleting cache (%s:%s) : glob() error', $category->getName(), $id));
-    }
-
-    foreach ($paths as $path) {
-      if (!@unlink($path)) {
-        throw new RuntimeException(sprintf('Error while deleting cache (%s:%s) : unlink() error', $category->getName(), $id));
+    if ($paths = @glob($globPath)) {
+      foreach ($paths as $path) {
+        if (!@unlink($path)) {
+          throw new RuntimeException(sprintf('Error while deleting cache (%s:%s) : unlink() error', $category->getName(), $id));
+        }
       }
     }
 
