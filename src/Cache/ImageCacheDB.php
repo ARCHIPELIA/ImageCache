@@ -245,17 +245,15 @@ class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
       }
     }
 
-    $this->BdD->SqlBindByName(':img_id', $id);
-    $blob = $this->BdD->SqlFetchField($category->getContentQuery());
+    $this->BdD->bindInt($id, ':img_id');
+    $hld_bytea = $this->BdD->SqlFetchField($category->getContentQuery());
 
-    if (!is_a($blob, 'OCI-Lob')) {
-      throw new RuntimeException("Invalid image field, OCI-Lob expected!");
-    }
-
-    if (!@file_put_contents($originalPath, $blob->load())) {
+    if (stream_copy_to_stream($hld_bytea, $hld_file = fopen($originalPath, 'wb')) === false) {
       unlink($originalPath);
       throw new RuntimeException(sprintf("Error while writing image '%s'", $originalPath));
     }
+
+    fclose($hld_file);
 
     return (new Imagine())
             ->open($originalPath);
