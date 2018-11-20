@@ -248,6 +248,9 @@ class ImageCacheDB extends AbstractImageCache implements ImageCacheInterface
     $this->BdD->bindInt($id, ':img_id');
     $hld_bytea = $this->BdD->SqlFetchField($category->getContentQuery());
 
+    if (!is_resource($hld_bytea))
+      throw new RuntimeException(sprintf("Wrong image type '%s'", $originalPath));
+
     if (stream_copy_to_stream($hld_bytea, $hld_file = fopen($originalPath, 'wb')) === false) {
       unlink($originalPath);
       throw new RuntimeException(sprintf("Error while writing image '%s'", $originalPath));
